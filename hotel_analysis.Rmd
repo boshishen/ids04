@@ -1,0 +1,11 @@
+---
+title: "final_project"
+output: html_document
+date: "2026-11-04"
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+hotel <- read_csv("data/hotel_saved.csv")
+glimpse(hotel)
+```
