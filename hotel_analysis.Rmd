@@ -9,3 +9,37 @@ library(knitr)
 hotel <- read_csv("data/hotel_saved.csv")
 glimpse(hotel)
 ```
+
+```{r data_summary, include=TRUE}
+summary(hotel)
+```
+```{r data_cleaning1a, include=TRUE}
+hotel_clean <- select(hotel, hotel, lead_time, is_canceled)
+glimpse(hotel_clean)
+```
+```{r data_cleaning1b, include=TRUE}
+hotel_clean %>%
+  filter(is.na(hotel) | is.na(lead_time) | is.na(is_canceled))
+```
+```{r cancellation_rate, include=TRUE}
+hotel_clean %>%
+  group_by(hotel) %>%
+  summarise(
+    cancellation_rate = mean(is_canceled)
+  )
+```
+```{r visualisation, include=TRUE}
+hotel_rate <- hotel_clean %>%
+  group_by(hotel) %>%
+  summarise(
+    cancellation_rate = mean(is_canceled)
+  )
+
+ggplot(hotel_rate, aes(x = hotel, y = cancellation_rate)) +
+  geom_col() +
+  labs(
+    title = "Cancellation Rate by Hotel Type",
+    x = "Hotel Type",
+    y = "Cancellation Rate"
+  )
+```
