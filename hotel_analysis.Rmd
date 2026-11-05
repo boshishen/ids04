@@ -73,3 +73,34 @@ ggplot(lead_time_rate, aes(x = lead_time_group, y = cancellation_rate)) +
     y = "Cancellation Rate"
   )
 ```
+```{r data_select, include=TRUE}
+deposit_data <- hotel %>%
+  select(deposit_type, is_canceled)
+```
+
+```{r data_count, include=TRUE}
+count(deposit_data, deposit_type)
+```
+
+```{r data_calculation3, include=TRUE}
+deposit_rate <- deposit_data %>%
+  group_by(deposit_type) %>%
+  summarise(
+    cancellation_rate = mean(is_canceled)
+  )
+
+deposit_rate
+```
+
+```{r data_visualisation3, include=TRUE}
+ggplot(deposit_rate, aes(x = deposit_type, y = cancellation_rate)) +
+  geom_col() +
+  labs(
+    title = "Cancellation Rate by Deposit Type",
+    x = "Deposit Type",
+    y = "Cancellation Rate"
+  )
+```
+
+
+
